@@ -1,5 +1,13 @@
 # @xstate/inspect
 
+## 0.6.5
+
+### Patch Changes
+
+- [#3198](https://github.com/statelyai/xstate/pull/3198) [`09e2130df`](https://github.com/statelyai/xstate/commit/09e2130dff80815c10df38496a761fe8ae0d9f6e) Thanks [@Andarist](https://github.com/Andarist)! - Fixed an issue that prevented some states from being sent correctly to the inspector when serializable values hold references to objects throwing on `toJSON` property access (like `obj.toJSON`). This property is accessed by the native algorithm before the value gets passed to the custom `serializer`. Because of a bug we couldn't correctly serialize such values even when a custom `serializer` was implemented that was meant to replace it in a custom way from within its parent's level.
+
+* [#3076](https://github.com/statelyai/xstate/pull/3076) [`34f3d9be7`](https://github.com/statelyai/xstate/commit/34f3d9be74d2bd9db51b2db06c5a65d980aec9c4) Thanks [@SimeonC](https://github.com/SimeonC)! - Fixed an issue with "maximum call stack size exceeded" errors being thrown when registering a machine with a very deep object in its context despite using a serializer capable of replacing such an object.
+
 ## 0.6.4
 
 ### Patch Changes
@@ -121,7 +129,7 @@
 
   const windowReceiver = createWindowReceiver(/* options? */);
 
-  windowReceiver.subscribe((event) => {
+  windowReceiver.subscribe(event => {
     // here, you will receive events like:
     // { type: "service.register", machine: ..., state: ..., sessionId: ... }
     console.log(event);
